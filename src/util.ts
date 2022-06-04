@@ -7,5 +7,5 @@ export function ensureDirectoryExists(path: string) {
 }
 
 export function escapeShell(cmd: string) {
-    return '"' + cmd.replace(/(["'$`\\])/g, '\\$1') + '"';
+    return cmd.replace(/(["'$`\\])/g, '\\$1');
 }
