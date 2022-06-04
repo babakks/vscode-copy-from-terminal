@@ -2,7 +2,7 @@
   "name": "vscode-copy-from-terminal",
   "displayName": "Copy/Pipe From Terminal",
   "description": "Copy/pipe from terminal to VS Code editor",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "babakks",
   "repository": {
     "type": "git",
