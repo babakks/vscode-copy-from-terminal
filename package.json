@@ -52,14 +52,20 @@
         "title": "Copy/Pipe From Terminal",
         "properties": {
           "vscode-copy-from-terminal.enabled": {
+            "title": "Enabled",
+            "description": "Enable/Disable Copy/Pipe From Terminal",
             "type": "boolean",
             "default": true
           },
           "vscode-copy-from-terminal.tempDirectory": {
+            "title": "Temp directory",
+            "description": "Temp directory for storing copied/piped data",
             "type": "string",
             "default": ""
           },
           "vscode-copy-from-terminal.alias": {
+            "title": "Alias",
+            "description": "Shell function alias",
             "type": "string",
             "default": "cp2code"
           }
