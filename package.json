@@ -3,6 +3,10 @@
   "displayName": "Copy/Pipe From Terminal",
   "description": "Copy/pipe from terminal to VS Code editor",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/babakks/vscode-copy-from-terminal"
+  },
   "engines": {
     "vscode": "^1.60.0"
   },
@@ -23,11 +27,17 @@
     "shell",
     "bash",
     "zsh",
-    "productivity"
+    "productivity",
+    "linux",
+    "mac",
+    "macos",
+    "unix",
+    "watch"
   ],
   "activationEvents": [
     "onStartupFinished"
   ],
+  "icon": "images/icon.png",
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
