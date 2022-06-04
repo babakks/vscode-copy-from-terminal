@@ -6,6 +6,10 @@
   "engines": {
     "vscode": "^1.60.0"
   },
+  "os": [
+    "linux",
+    "darwin"
+  ],
   "categories": [
     "Other"
   ],
@@ -22,14 +26,34 @@
     "productivity"
   ],
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "vscode-copy-from-terminal.helloWorld",
-        "title": "Hello World"
+        "command": "vscode-copy-from-terminal.toggle",
+        "title": "Copy From Terminal: Toggle (Enable/Disable)",
+        "shortTitle": "Toggle"
+      }
+    ],
+    "configuration": [
+      {
+        "title": "Copy/Pipe From Terminal",
+        "properties": {
+          "vscode-copy-from-terminal.enabled": {
+            "type": "boolean",
+            "default": true
+          },
+          "vscode-copy-from-terminal.tempDirectory": {
+            "type": "string",
+            "default": ""
+          },
+          "vscode-copy-from-terminal.alias": {
+            "type": "string",
+            "default": "cp2code"
+          }
+        }
       }
     ]
   },
