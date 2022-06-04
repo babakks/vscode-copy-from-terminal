@@ -5,7 +5,7 @@ import { emit } from 'process';
 import * as vscode from 'vscode';
 
 import { Config } from './config';
-import { ensureDirectoryExists } from './util';
+import { ensureDirectoryExists, escapeShell } from './util';
 import { makeWatcher, WatchEvent } from './watcher';
 
 const DEFAULT_TEMP_DIR = 'temp';
@@ -49,7 +49,7 @@ async function execPayload(terminal: vscode.Terminal, tmpdir: string, alias: str
 }
 
 export function makePayload(tmpdir: string, alias: string) {
-    return `export COPY_TO_VSCODE_TEMP_DIR="${tmpdir}/" && ${alias}() { dt="$(date --iso-8601=seconds)" && fname="$dt-$RANDOM.tmp" && fpath="$COPY_TO_VSCODE_TEMP_DIR/$fname" && cat > $fpath }`;
+    return `export COPY_TO_VSCODE_TEMP_DIR="${escapeShell(tmpdir)}/" && ${escapeShell(alias)}() { dt="$(date --iso-8601=seconds)" && fname="$dt-$RANDOM.tmp" && fpath="$COPY_TO_VSCODE_TEMP_DIR/$fname" && cat > "$fpath" }`;
 }
 
 function watch(context: vscode.ExtensionContext, tmpdir: string) {
