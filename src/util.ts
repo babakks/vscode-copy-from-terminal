@@ -5,3 +5,7 @@ export function ensureDirectoryExists(path: string) {
         fs.mkdirSync(path);
     }
 }
+
+export function escapeShell(cmd: string) {
+    return '"' + cmd.replace(/(["'$`\\])/g, '\\$1') + '"';
+}
