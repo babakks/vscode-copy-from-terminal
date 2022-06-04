@@ -49,7 +49,7 @@ async function execPayload(terminal: vscode.Terminal, tmpdir: string, alias: str
 }
 
 export function makePayload(tmpdir: string, alias: string) {
-    return `export COPY_TO_VSCODE_TEMP_DIR="${escapeShell(tmpdir)}/" && ${escapeShell(alias)}() { dt="$(date --iso-8601=seconds)" && fname="$dt-$RANDOM.tmp" && fpath="$COPY_TO_VSCODE_TEMP_DIR/$fname" && cat > "$fpath" }`;
+    return `export COPY_TO_VSCODE_TEMP_DIR="${escapeShell(tmpdir)}/" && ${escapeShell(alias)}() { dt="$(date --iso-8601=seconds)" && tempfname="$dt-$RANDOM.tmp" && tempfpath="$COPY_TO_VSCODE_TEMP_DIR/$tempfname" && cat > "$tempfpath" }`;
 }
 
 function watch(context: vscode.ExtensionContext, tmpdir: string) {
