@@ -4,6 +4,10 @@ All notable changes to the "vscode-copy-from-terminal" extension will be documen
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## 0.0.3
+
+- Fix multi-window bug
+
 ## 0.0.1
 
 - Initial release
