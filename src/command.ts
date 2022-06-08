@@ -57,7 +57,7 @@ async function execPayload(terminal: vscode.Terminal, instanceId: string, tmpdir
 }
 
 export function makePayload(instanceId: string, tmpdir: string, alias: string) {
-    return `export COPY_TO_VSCODE_TEMP_DIR="${escapeShell(tmpdir)}/" && export EXTENSION_INSTANCE_ID="${escapeShell(instanceId)}" && ${escapeShell(alias)}() { dt="$(date --iso-8601=seconds)" && tempfname="$dt-$RANDOM-$EXTENSION_INSTANCE_ID.tmp" && tempfpath="$COPY_TO_VSCODE_TEMP_DIR/$tempfname" && cat > "$tempfpath" }`;
+    return `export COPY_TO_VSCODE_TEMP_DIR="${escapeShell(tmpdir)}/" && export EXTENSION_INSTANCE_ID="${escapeShell(instanceId)}" && ${escapeShell(alias)}() { dt="$(date --iso-8601=seconds)" && tempfname="$dt-$RANDOM-$EXTENSION_INSTANCE_ID.tmp" && tempfpath="$COPY_TO_VSCODE_TEMP_DIR/$tempfname" && cat > "$tempfpath"; }`;
 }
 
 function watch(context: vscode.ExtensionContext, instance: string, tmpdir: string) {
