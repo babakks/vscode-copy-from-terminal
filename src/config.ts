@@ -9,7 +9,11 @@ export class Config {
         return vscode.workspace.getConfiguration('vscode-copy-from-terminal').get<string>('tempDirectory', '');
     }
 
-    static get alias(): string {
+    static get cpAlias(): string {
         return vscode.workspace.getConfiguration('vscode-copy-from-terminal').get<string>('alias', '');
+    }
+
+    static get teeAlias(): string {
+        return vscode.workspace.getConfiguration('vscode-copy-from-terminal').get<string>('aliasForTee', '');
     }
 }
