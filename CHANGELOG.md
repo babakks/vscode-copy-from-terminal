@@ -4,6 +4,10 @@ All notable changes to the "vscode-copy-from-terminal" extension will be documen
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## 0.0.5
+
+- Add `tee2code` command
+
 ## 0.0.4
 
 - Fix missing payload line termination for bash

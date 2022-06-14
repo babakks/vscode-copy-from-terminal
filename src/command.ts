@@ -33,16 +33,17 @@ export async function toggle(context: vscode.ExtensionContext) {
 
 export function turnOn(context: vscode.ExtensionContext) {
     const tmpdir = Config.tempDirectory || path.join(context.extensionUri.fsPath, DEFAULT_TEMP_DIR);
-    const alias = Config.alias;
+    const cpAlias = Config.cpAlias;
+    const teeAlias = Config.teeAlias;
     ensureDirectoryExists(tmpdir);
 
     turnOff(); // Clean start
     _instanceId = _instanceId || crypto.randomUUID().substring(0, 4);
     const instanceId = _instanceId;
     watch(context, instanceId, tmpdir);
-    _onDidOpenTerminalHook = vscode.window.onDidOpenTerminal(x => execPayload(x, instanceId, tmpdir, alias));
+    _onDidOpenTerminalHook = vscode.window.onDidOpenTerminal(x => execPayload(x, instanceId, tmpdir, cpAlias, teeAlias));
     context.subscriptions.push(_onDidOpenTerminalHook);
-    vscode.window.terminals.forEach(x => execPayload(x, instanceId, tmpdir, alias));
+    vscode.window.terminals.forEach(x => execPayload(x, instanceId, tmpdir, cpAlias, teeAlias));
 }
 
 export function turnOff() {
@@ -51,13 +52,13 @@ export function turnOff() {
     disposeOnDidOpenTerminalHook();
 }
 
-async function execPayload(terminal: vscode.Terminal, instanceId: string, tmpdir: string, alias: string) {
-    const payload = makePayload(instanceId, tmpdir, alias);
+async function execPayload(terminal: vscode.Terminal, instanceId: string, tmpdir: string, cpAlias: string, teeAlias: string) {
+    const payload = makePayload(instanceId, tmpdir, cpAlias, teeAlias);
     terminal.sendText(payload, true);
 }
 
-export function makePayload(instanceId: string, tmpdir: string, alias: string) {
-    return `export COPY_TO_VSCODE_TEMP_DIR="${escapeShell(tmpdir)}/" && export EXTENSION_INSTANCE_ID="${escapeShell(instanceId)}" && ${escapeShell(alias)}() { dt="$(date --iso-8601=seconds)" && tempfname="$dt-$RANDOM-$EXTENSION_INSTANCE_ID.tmp" && tempfpath="$COPY_TO_VSCODE_TEMP_DIR/$tempfname" && cat > "$tempfpath"; }`;
+export function makePayload(instanceId: string, tmpdir: string, cpAlias: string, teeAlias: string) {
+    return `export COPY_TO_VSCODE_TEMP_DIR="${escapeShell(tmpdir)}/" && export EXTENSION_INSTANCE_ID="${escapeShell(instanceId)}" && _get_temp_file() { dt="$(date --iso-8601=ns)" && tempfname="$dt-$EXTENSION_INSTANCE_ID.tmp" && echo "$COPY_TO_VSCODE_TEMP_DIR/$tempfname"; } && ${escapeShell(cpAlias)}() { cat > "$(_get_temp_file)"; } && ${escapeShell(teeAlias)}() { tee "$(_get_temp_file)"; }`;
 }
 
 function watch(context: vscode.ExtensionContext, instance: string, tmpdir: string) {

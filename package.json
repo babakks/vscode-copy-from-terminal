@@ -2,7 +2,7 @@
   "name": "vscode-copy-from-terminal",
   "displayName": "Copy/Pipe From Terminal",
   "description": "Copy/pipe from terminal to VS Code editor",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "publisher": "babakks",
   "repository": {
     "type": "git",
@@ -33,7 +33,11 @@
     "mac",
     "macos",
     "unix",
-    "watch"
+    "watch",
+    "tee",
+    "cp",
+    "tee2code",
+    "cp2code"
   ],
   "activationEvents": [
     "onStartupFinished"
@@ -69,6 +73,12 @@
             "description": "Shell function alias",
             "type": "string",
             "default": "cp2code"
+          },
+          "vscode-copy-from-terminal.aliasForTee": {
+            "title": "Alias (for `tee`)",
+            "description": "Shell function alias (for `tee`)",
+            "type": "string",
+            "default": "tee2code"
           }
         }
       }
