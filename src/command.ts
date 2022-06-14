@@ -33,16 +33,17 @@ export async function toggle(context: vscode.ExtensionContext) {
 
 export function turnOn(context: vscode.ExtensionContext) {
     const tmpdir = Config.tempDirectory || path.join(context.extensionUri.fsPath, DEFAULT_TEMP_DIR);
-    const alias = Config.alias;
+    const cpAlias = Config.cpAlias;
+    const teeAlias = Config.teeAlias;
     ensureDirectoryExists(tmpdir);
 
     turnOff(); // Clean start
     _instanceId = _instanceId || crypto.randomUUID().substring(0, 4);
     const instanceId = _instanceId;
     watch(context, instanceId, tmpdir);
-    _onDidOpenTerminalHook = vscode.window.onDidOpenTerminal(x => execPayload(x, instanceId, tmpdir, alias));
+    _onDidOpenTerminalHook = vscode.window.onDidOpenTerminal(x => execPayload(x, instanceId, tmpdir, cpAlias, teeAlias));
     context.subscriptions.push(_onDidOpenTerminalHook);
-    vscode.window.terminals.forEach(x => execPayload(x, instanceId, tmpdir, alias));
+    vscode.window.terminals.forEach(x => execPayload(x, instanceId, tmpdir, cpAlias, teeAlias));
 }
 
 export function turnOff() {
