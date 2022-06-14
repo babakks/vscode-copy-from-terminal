@@ -69,6 +69,12 @@
             "description": "Shell function alias",
             "type": "string",
             "default": "cp2code"
+          },
+          "vscode-copy-from-terminal.aliasForTee": {
+            "title": "Alias (for `tee`)",
+            "description": "Shell function alias (for `tee`)",
+            "type": "string",
+            "default": "tee2code"
           }
         }
       }
