@@ -33,7 +33,11 @@
     "mac",
     "macos",
     "unix",
-    "watch"
+    "watch",
+    "tee",
+    "cp",
+    "tee2code",
+    "cp2code"
   ],
   "activationEvents": [
     "onStartupFinished"
