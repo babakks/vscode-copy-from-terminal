@@ -51,13 +51,13 @@ export function turnOff() {
     disposeOnDidOpenTerminalHook();
 }
 
-async function execPayload(terminal: vscode.Terminal, instanceId: string, tmpdir: string, alias: string) {
-    const payload = makePayload(instanceId, tmpdir, alias);
+async function execPayload(terminal: vscode.Terminal, instanceId: string, tmpdir: string, cpAlias: string, teeAlias: string) {
+    const payload = makePayload(instanceId, tmpdir, cpAlias, teeAlias);
     terminal.sendText(payload, true);
 }
 
-export function makePayload(instanceId: string, tmpdir: string, alias: string) {
-    return `export COPY_TO_VSCODE_TEMP_DIR="${escapeShell(tmpdir)}/" && export EXTENSION_INSTANCE_ID="${escapeShell(instanceId)}" && ${escapeShell(alias)}() { dt="$(date --iso-8601=seconds)" && tempfname="$dt-$RANDOM-$EXTENSION_INSTANCE_ID.tmp" && tempfpath="$COPY_TO_VSCODE_TEMP_DIR/$tempfname" && cat > "$tempfpath"; }`;
+export function makePayload(instanceId: string, tmpdir: string, cpAlias: string, teeAlias: string) {
+    return `export COPY_TO_VSCODE_TEMP_DIR="${escapeShell(tmpdir)}/" && export EXTENSION_INSTANCE_ID="${escapeShell(instanceId)}" && _get_temp_file() { dt="$(date --iso-8601=ns)" && tempfname="$dt-$EXTENSION_INSTANCE_ID.tmp" && echo "$COPY_TO_VSCODE_TEMP_DIR/$tempfname"; } && ${escapeShell(cpAlias)}() { cat > "$(_get_temp_file)"; } && ${escapeShell(teeAlias)}() { tee "$(_get_temp_file)"; }`;
 }
 
 function watch(context: vscode.ExtensionContext, instance: string, tmpdir: string) {
