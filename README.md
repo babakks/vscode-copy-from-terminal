@@ -1,6 +1,10 @@
-# Copy/Pipe From Terminal (`cp2code`)
+# Copy/Pipe From Terminal (`cp2code`/`tee2code`)
 
 Copy/Pipe data from the integrated terminal to a new editor/tab in VS Code.
+
+![Capture](images/capture/simple.gif)
+
+## Use **`cp2code`** or **`tee2code`**
 
 This is simply done by piping the output of any shell command to the **`cp2code`** (or **`tee2code`** if you wouldn't want to end the piping chain), like:
 
