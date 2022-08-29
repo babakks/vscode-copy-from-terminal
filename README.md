@@ -38,7 +38,7 @@ To copy/pipe data from the integrated terminal into a new editor/tab, follow the
 
 1. Now you'd see a new editor with the content you just piped.
 
-ℹ️ You may see an unknown command (something like `export COPY_TO_VSCODE_TEMP_DIR=...`) being executed in the newly opened terminal window. That's all OK. It's just the definition of a shell function named `cp2code` (and `tee2code`), which does the copy/pipe procedure. 🍏
+ℹ️ You may see an unknown command (something like `_bp=...`) being executed in the newly opened terminal window. That's all OK. It's just the definition of a shell function named `cp2code` (and `tee2code`), which does the copy/pipe procedure. 🍏
 
 ## Toggle ON/OFF
 

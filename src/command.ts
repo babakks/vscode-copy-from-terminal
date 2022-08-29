@@ -7,8 +7,10 @@ import * as vscode from 'vscode';
 import { Config } from './config';
 import { ensureDirectoryExists, escapeShell } from './util';
 import { makeWatcher, WatchEvent } from './watcher';
+import { extensionContext } from './extension';
 
 const DEFAULT_TEMP_DIR = 'temp';
+const INIT_SCRIPT = 'script/init.sh';
 
 /**
 * This avoids opening the file in more than one VS Code window (if there are multiple open VS Code windows).
@@ -58,7 +60,17 @@ async function execPayload(terminal: vscode.Terminal, instanceId: string, tmpdir
 }
 
 export function makePayload(instanceId: string, tmpdir: string, cpAlias: string, teeAlias: string) {
-    return `export COPY_TO_VSCODE_TEMP_DIR="${escapeShell(tmpdir)}/" && export EXTENSION_INSTANCE_ID="${escapeShell(instanceId)}" && _get_temp_file() { dt="$(date --iso-8601=ns)" && tempfname="$dt-$EXTENSION_INSTANCE_ID.tmp" && echo "$COPY_TO_VSCODE_TEMP_DIR/$tempfname"; } && ${escapeShell(cpAlias)}() { cat > "$(_get_temp_file)"; } && ${escapeShell(teeAlias)}() { tee "$(_get_temp_file)"; }`;
+    const bp = extensionContext.extensionPath;
+    const path2script = path.join('$_bp', escapeShell(INIT_SCRIPT));
+    const path2tmpdir = path.join('$_bp', escapeShell(path.relative(bp, tmpdir)));
+    const args = [
+        path2script,
+        escapeShell(instanceId),
+        path2tmpdir,
+        escapeShell(cpAlias),
+        escapeShell(teeAlias),
+    ].map(x => `"${x}"`);
+    return ' ' /* Prevent shell history cluttering */ + `_bp="${escapeShell(bp)}"; . ${args.join(' ')}`;
 }
 
 function watch(context: vscode.ExtensionContext, instance: string, tmpdir: string) {
