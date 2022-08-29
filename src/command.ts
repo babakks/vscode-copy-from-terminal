@@ -70,7 +70,7 @@ export function makePayload(instanceId: string, tmpdir: string, cpAlias: string,
         escapeShell(cpAlias),
         escapeShell(teeAlias),
     ].map(x => `"${x}"`);
-    return `_bp="${escapeShell(bp)}"; . ${args.join(' ')}`;
+    return ' ' /* Prevent shell history cluttering */ + `_bp="${escapeShell(bp)}"; . ${args.join(' ')}`;
 }
 
 function watch(context: vscode.ExtensionContext, instance: string, tmpdir: string) {
