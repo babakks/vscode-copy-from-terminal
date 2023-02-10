@@ -4,7 +4,16 @@ cp_alias="$3"
 tee_alias="$4"
 
 _get_temp_file() {
-    dt="$(date --iso-8601=ns)"
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        dt="$(date --iso-8601=ns)"
+    else
+        if which bash > /dev/null; then
+            _r="$(bash -c 'echo $RANDOM')"
+        else
+            _r="$RANDOM"
+        fi
+        dt="$(date +%s)-$_r"
+    fi
     tempfname="$dt-$EXTENSION_INSTANCE_ID.tmp"
     echo "$COPY_TO_VSCODE_TEMP_DIR/$tempfname"
 }
