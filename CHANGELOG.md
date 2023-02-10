@@ -4,6 +4,10 @@ All notable changes to the "vscode-copy-from-terminal" extension will be documen
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## 0.0.9
+
+- Fix issue with the `date` command on macOS.
+
 ## 0.0.8
 
 - Shorten initializer command into a shell script invocation
